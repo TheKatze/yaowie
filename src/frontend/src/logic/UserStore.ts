@@ -3,11 +3,11 @@ import { User } from "../models/User";
 
 class UserStore {
   public async me(): Promise<User | undefined> {
-    var matches = ((await localforage.getItem("users")) as User[]).filter(
-      (u) => u.privateKey
+    const matches = ((await localforage.getItem("users")) as User[])?.filter(
+      (u) => u?.privateKey
     );
 
-    if (matches.length === 0) {
+    if (!matches?.length) {
       return undefined;
     }
 
@@ -15,7 +15,7 @@ class UserStore {
   }
 
   public async add(user: User): Promise<void> {
-    let users =
+    const users =
       ((await localforage.getItem("users")) as User[]) ?? ([] as User[]);
 
     users.push(user);
