@@ -1,12 +1,8 @@
 <template>
   <div>
     <balance-card title="Balance" :balance="500" />
-    <v-row>
-      <v-col>
-        <v-subheader> Recent </v-subheader>
-      </v-col>
-    </v-row>
     <v-divider />
+    <v-list> </v-list>
   </div>
 </template>
 

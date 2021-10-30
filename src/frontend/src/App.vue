@@ -3,11 +3,16 @@
     <v-app-bar app elevate-on-scroll>
       <v-app-bar-nav-icon @click="showDrawer = !showDrawer" />
       <v-toolbar-title> Yaowie </v-toolbar-title>
+      <v-spacer />
+      <v-chip :color="isConnected ? '' : 'error'">
+        {{ isConnected ? "Connected" : "Offline" }}
+      </v-chip>
     </v-app-bar>
 
     <v-navigation-drawer app v-model="showDrawer">
       <v-list nav>
         <navigation-item to="/" icon="mdi-home" title="Overview" />
+        <navigation-item to="/settings" icon="mdi-cog" title="Settings" />
       </v-list>
     </v-navigation-drawer>
 
@@ -30,5 +35,7 @@ import NavigationItem from "@/components/NavigationItem.vue";
 })
 export default class App extends Vue {
   public showDrawer = false;
+
+  isConnected = true;
 }
 </script>
