@@ -1,35 +1,34 @@
-import localforage from "localforage";
+import { User } from "@/models/User";
 import UserStore from "./UserStore";
 
 class CryptoProvider {
-  async generateKeyPair(username: string): Promise<void> {
-    if (await UserStore.me()) return;
+  async generateUser(username: string): Promise<User | undefined> {
+    if (await UserStore.me()) return undefined;
 
-    var keys = await window.crypto.subtle.generateKey(
-      {
-        name: "RSA-OAEP",
-        modulusLength: 4096,
-        publicExponent: new Uint8Array([1, 0, 1]),
-        hash: "SHA-256",
-      },
-      true,
-      ["encrypt", "decrypt"]
-    );
-
-    await UserStore.add({
+    const user = {
       name: username,
-      publicKey: await this.keyToBase64(keys.publicKey!),
-      privateKey: await this.keyToBase64(keys.privateKey!),
-    });
+      publicKey: this.randomBase64(),
+      privateKey: "hiImTheMeUser",
+    };
+
+    await UserStore.add(user);
+
+    return user;
   }
-  async keyToBase64(key: CryptoKey): Promise<string> {
-    var buffer = await window.crypto.subtle.exportKey("raw", key);
-    var binary = "";
-    var bytes = new Uint8Array(buffer);
-    var len = bytes.byteLength;
-    for (var i = 0; i < len; i++) {
-      binary += String.fromCharCode(bytes[i]);
+
+  randomBase64(length = 32): string {
+    // Declare all characters
+    const chars =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    // Pick characers randomly
+    let str = "";
+    for (let i = 0; i < length; i++) {
+      str += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    return window.btoa(binary);
+
+    return btoa(str);
   }
 }
+
+export default new CryptoProvider();

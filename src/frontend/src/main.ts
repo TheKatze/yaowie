@@ -12,7 +12,7 @@ Vue.config.productionTip = false;
 
 vuetify.preset.theme.dark = true;
 
-Api.initialize(new Axios({ baseURL: "" }));
+Api.initialize(new Axios({ baseURL: "https://172.16.41.22:5001/" }));
 
 async function start() {
   new Vue({

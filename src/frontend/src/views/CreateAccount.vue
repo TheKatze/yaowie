@@ -13,14 +13,23 @@
 
 <script lang="ts">
 import Api from "@/logic/Api";
+import CryptoProvider from "@/logic/CryptoProvider";
 import { Vue, Component } from "vue-property-decorator";
 
 @Component
 export default class CreateAccount extends Vue {
   name = "";
 
-  createAccount() {
-    console.log("");
+  async createAccount(): Promise<void> {
+    if (!this.name) {
+      return;
+    }
+
+    const user = await CryptoProvider.generateUser(this.name);
+
+    if (!user) throw Error("wtf");
+
+    Api.createUser(user);
   }
 }
 </script>
