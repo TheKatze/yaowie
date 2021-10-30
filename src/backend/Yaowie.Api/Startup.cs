@@ -28,6 +28,8 @@ namespace Yaowie.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddScoped<IUserService, UserService>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddScoped<ITransactionService, TransactionService>();
@@ -44,6 +46,8 @@ namespace Yaowie.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(o => o.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
