@@ -9,6 +9,6 @@ namespace Yaowie.Api
     public interface IEventQueue
     {
         public Task Add(string publicKey, Transaction transaction);
-        public Task Clear(string publicKey);
+        public List<Transaction> GetAllFromId(string publicKey);
     }
 }

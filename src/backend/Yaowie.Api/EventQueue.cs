@@ -23,10 +23,21 @@ namespace Yaowie.Api
             return Task.CompletedTask;
         }
 
-        public Task Clear(string publicKey)
+        private Task Clear(string publicKey)
         {
             userTransactions.Remove(publicKey);
             return Task.CompletedTask;
+        }
+
+        public List<Transaction> GetAllFromId(string publicKey){
+            if (!userTransactions.TryGetValue(publicKey, out var transactions))
+            {
+                throw new NotFoundException();
+            }
+
+            Clear(publicKey);
+
+            return transactions;
         }
     }
 }

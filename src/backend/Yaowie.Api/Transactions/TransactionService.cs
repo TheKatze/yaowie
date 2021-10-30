@@ -11,7 +11,7 @@ namespace Yaowie.Api.Transactions
         Task CreateTransaction(TransactionCreationDto dto);
     }
 
-    public record TransactionCreationDto(Guid Id, decimal Value, string Receiver, string Sender);
+    public record TransactionCreationDto(Guid Id, decimal Value, string Receiver, string Sender, DateTime date);
 
     public class TransactionService : ITransactionService
     {
@@ -32,7 +32,7 @@ namespace Yaowie.Api.Transactions
             var sender = userRepository.Entities.SingleOrDefault(u => u.PublicKey.SequenceEqual(Convert.FromBase64String(dto.Sender))) ?? throw new NotFoundException();
 
             
-            Transaction transaction = Transaction.Create(dto.Id, dto.Value, receiver, sender);
+            Transaction transaction = Transaction.Create(dto.Id, dto.Value, receiver, sender, dto.date);
             await transactionRepository.Add(transaction);
 
             await eventQueue.Add(dto.Receiver, transaction);
