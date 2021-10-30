@@ -19,8 +19,12 @@ class Api {
     await this.axios?.post("/transaction", transaction);
   }
 
-  async createUser(user: { name: string; publicKey: string }) {
-    await this.axios?.post("/user", user);
+  async createUser(user: User) {
+    console.log(user);
+    await this.axios?.post("/user", {
+      name: user.name,
+      publicKey: user.publicKey,
+    });
   }
 }
 

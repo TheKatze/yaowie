@@ -3,15 +3,11 @@ import UserStore from "./UserStore";
 
 class CryptoProvider {
   async generateUser(username: string): Promise<User | undefined> {
-    if (await UserStore.me()) return undefined;
-
     const user = {
       name: username,
       publicKey: this.randomBase64(),
       privateKey: "hiImTheMeUser",
     };
-
-    await UserStore.add(user);
 
     return user;
   }

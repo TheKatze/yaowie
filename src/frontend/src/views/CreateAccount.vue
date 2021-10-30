@@ -14,6 +14,7 @@
 <script lang="ts">
 import Api from "@/logic/Api";
 import CryptoProvider from "@/logic/CryptoProvider";
+import UserStore from "@/logic/UserStore";
 import { Vue, Component } from "vue-property-decorator";
 
 @Component
@@ -30,6 +31,7 @@ export default class CreateAccount extends Vue {
     if (!user) throw Error("wtf");
 
     Api.createUser(user);
+    UserStore.add(user);
   }
 }
 </script>
