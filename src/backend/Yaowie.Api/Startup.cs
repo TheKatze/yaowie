@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Yaowie.Api.Transactions;
+using Yaowie.Api.Users;
 
 namespace Yaowie.Api
 {
@@ -26,6 +28,13 @@ namespace Yaowie.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddScoped<ITransactionService, TransactionService>();
+            services.AddSingleton<ITransactionRepository, TransactionRepository>();
+            services.AddSingleton<IEventQueue, EventQueue>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -37,6 +46,8 @@ namespace Yaowie.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(o => o.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
