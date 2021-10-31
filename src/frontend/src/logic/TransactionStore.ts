@@ -3,7 +3,7 @@ import { Transaction } from "../models/Transaction";
 
 class TransactionStore {
   public async add(transaction: Transaction): Promise<void> {
-    let transactions =
+    const transactions =
       ((await localforage.getItem("transactions")) as Transaction[]) ??
       ([] as Transaction[]);
 
