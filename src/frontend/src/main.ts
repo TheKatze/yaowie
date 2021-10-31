@@ -12,7 +12,12 @@ Vue.config.productionTip = false;
 
 vuetify.preset.theme.dark = true;
 
-Api.initialize(new Axios({ baseURL: "https://localhost:5001/" }));
+Api.initialize(
+  new Axios({
+    baseURL: "https://localhost:5001/",
+    headers: { "Content-Type": "application/json" },
+  })
+);
 
 async function start() {
   new Vue({
@@ -23,7 +28,7 @@ async function start() {
   }).$mount("#app");
 
   if (!(await UserStore.me())) {
-    router.push({ name: "CreateAccount" });
+    await router.push({ name: "CreateAccount" });
   }
 }
 

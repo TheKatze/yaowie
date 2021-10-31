@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Yaowie.Api.Users;
 
@@ -32,10 +29,10 @@ namespace Yaowie.Api.Controllers
             return Created("", "");
         }
 
-        [HttpGet("test")]
-        public bool Works()
+        [HttpGet("{publicKey}")]
+        public async Task<User> GetUserFromPublicKey([FromRoute] string publicKey)
         {
-            return true;
+            return await userService.GetUser(publicKey);
         }
     }
 }

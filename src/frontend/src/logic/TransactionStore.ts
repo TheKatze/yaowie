@@ -11,6 +11,13 @@ class TransactionStore {
 
     await localforage.setItem("transactions", transactions);
   }
+
+  public async list(): Promise<Transaction[]> {
+    return (
+      ((await localforage.getItem("transactions")) as Transaction[]) ??
+      ([] as Transaction[])
+    );
+  }
 }
 
 export default new TransactionStore();

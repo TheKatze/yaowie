@@ -30,8 +30,9 @@ export default class CreateAccount extends Vue {
 
     if (!user) throw Error("wtf");
 
-    Api.createUser(user);
-    UserStore.add(user);
+    await Api.createUser(user);
+    await UserStore.add(user);
+    await this.$router.push({ name: "Overview" });
   }
 }
 </script>

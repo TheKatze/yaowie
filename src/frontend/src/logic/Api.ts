@@ -12,7 +12,7 @@ class Api {
   async fetchQueue(publicKey: string): Promise<Transaction[]> {
     const response = await this.axios?.get("/eventqueue/" + publicKey);
 
-    return response?.data as Transaction[];
+    return JSON.parse(response?.data) as Transaction[];
   }
 
   async createTransaction(transaction: Transaction): Promise<void> {
@@ -21,10 +21,22 @@ class Api {
 
   async createUser(user: User) {
     console.log(user);
-    await this.axios?.post("/user", {
-      name: user.name,
-      publicKey: user.publicKey,
-    });
+
+    await this.axios?.post(
+      "/user",
+      JSON.stringify({
+        name: user.name,
+        publicKey: user.publicKey,
+      })
+    );
+  }
+
+  async getUser(publicKey: string): Promise<User | undefined> {
+    const response = await this.axios?.get("/user/" + publicKey);
+
+    if (response?.status != 200) return undefined;
+
+    return JSON.parse(response?.data) as User;
   }
 }
 

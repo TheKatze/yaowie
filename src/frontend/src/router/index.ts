@@ -24,6 +24,14 @@ const routes: Array<RouteConfig> = [
         /* webpackChunkName: "createAccount" */ "../views/CreateAccount.vue"
       ),
   },
+  {
+    path: "/createtransaction/:key",
+    name: "CreateTransaction",
+    component: () =>
+      import(
+        /* webpackChunkName: "createTransaction" */ "../views/CreateTransaction.vue"
+      ),
+  },
 ];
 
 const router = new VueRouter({

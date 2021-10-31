@@ -23,6 +23,10 @@ class UserStore {
     await localforage.setItem("users", users);
   }
 
+  public async list(): Promise<User[]> {
+    return ((await localforage.getItem("users")) as User[]) ?? ([] as User[]);
+  }
+
   public async remove(user: User): Promise<void> {
     let users =
       ((await localforage.getItem("users")) as User[]) ?? ([] as User[]);
